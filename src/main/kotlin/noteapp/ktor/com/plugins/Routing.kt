@@ -22,6 +22,7 @@ fun Application.configureRouting() {
         get("/") {
             call.respondText("Hello World!")
         }
+        loginRoute()
     }
     routing {
     }
@@ -42,7 +43,6 @@ private fun Application.configureModule() {
     install(CallLogging)
     install(Routing) {
         registerRoute()
-        loginRoute()
         noteRoutes()
     }
 }
