@@ -19,17 +19,14 @@ import noteapp.ktor.com.data.addOwnerToNote as addOwnerToNote1
 
 fun Route.noteRoutes() {
     route("/getNotes") {
-        authenticate {
             get {
                 val email = (call.authentication.principal as JwtConfig.JwtUser).userName
                 val notes = getNotesForUser(email)
                 call.respond(OK, notes)
             }
-        }
     }
 
     route("/addNotes") {
-        authenticate {
             post {
                 val note = try {
                     call.receive<Note>()
@@ -42,7 +39,6 @@ fun Route.noteRoutes() {
                 } else {
                     call.respond(Conflict)
                 }
-            }
         }
     }
 
