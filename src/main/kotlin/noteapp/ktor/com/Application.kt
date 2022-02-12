@@ -10,7 +10,7 @@ import noteapp.ktor.com.data.registerUser
 import noteapp.ktor.com.plugins.configureRouting
 
 fun main() {
-    embeddedServer(Netty, port = 8000) {
+    embeddedServer(Netty, port = System.getenv("PORT").toInt()) {
         configureRouting()
     }.start(wait = true)
 }
