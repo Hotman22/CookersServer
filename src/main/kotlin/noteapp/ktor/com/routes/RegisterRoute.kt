@@ -19,6 +19,9 @@ fun Route.registerRoute() {
     get("/welcomeBis") {
         call.respondText("Welcome Home Bis!")
     }
+    get("/welcomeBisTest") {
+        call.respondText("Welcome Home Bis Test!")
+    }
     route("/register") {
         post {
             val request = try {
