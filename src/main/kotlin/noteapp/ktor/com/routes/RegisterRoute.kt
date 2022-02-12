@@ -19,7 +19,7 @@ fun Route.registerRoute() {
     get("/welcomeBis") {
         call.respondText("Welcome Home Bis!")
     }
-    get("/welcomeBisTest") {
+    get("/welcomeBis2") {
         call.respondText("Welcome Home Bis Test!")
     }
     route("/register") {
