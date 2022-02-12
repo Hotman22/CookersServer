@@ -5,18 +5,16 @@ val logback_version: String by project
 plugins {
     application
     kotlin("jvm") version "1.6.10"
-    id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("com.google.cloud.tools.appengine") version "2.4.2"
 }
 
 tasks.create("stage") {
     dependsOn("installDist")
 }
 
-group = "noteapp.ktor.com"
+group = "ccookers.com"
 version = "0.0.2"
 application {
-    mainClass.set("noteapp.ktor.com.ApplicationKt")
+    mainClass.set("cookers.com.ApplicationKt")
 }
 
 repositories {
@@ -26,15 +24,6 @@ repositories {
     maven ("https://kotlin.bintray.com/kotlin-js-wrappers")
 }
 
-appengine {
-    stage {
-        setArtifact("build/libs/${project.name}-${project.version}-all.jar")
-    }
-    deploy {
-        version = "GCLOUD_CONFIG"
-        projectId = "GCLOUD_CONFIG"
-    }
-}
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class.java).all {
     kotlinOptions {
