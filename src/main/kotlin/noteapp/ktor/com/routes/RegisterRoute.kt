@@ -16,12 +16,6 @@ import noteapp.ktor.com.data.requests.AccountRequest
 import noteapp.ktor.com.security.getHashWithSalt
 
 fun Route.registerRoute() {
-    get("/welcomeBis") {
-        call.respondText("Welcome Home Bis!")
-    }
-    get("/welcomeBis2") {
-        call.respondText("Welcome Home Bis Test!")
-    }
     route("/register") {
         post {
             val request = try {

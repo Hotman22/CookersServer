@@ -20,10 +20,7 @@ fun Application.configureRouting() {
     // Starting point for a Ktor app:
     routing {
         get("/") {
-            call.respondText("Hello World 2!")
-        }
-        get("/welcome") {
-            call.respondText("Welcome Home!")
+            call.respondText("Hello World!")
         }
     }
     routing {
