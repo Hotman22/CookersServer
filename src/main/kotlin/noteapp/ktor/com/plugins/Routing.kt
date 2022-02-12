@@ -25,9 +25,6 @@ fun Application.configureRouting() {
         get("/welcome") {
             call.respondText("Welcome Home!")
         }
-        get("/welcomeBis") {
-            call.respondText("Welcome Home Bis!")
-        }
     }
     routing {
     }
