@@ -1,5 +1,6 @@
 package noteapp.ktor.com.data
 
+import com.mongodb.ConnectionString
 import noteapp.ktor.com.data.collections.Note
 import noteapp.ktor.com.data.collections.User
 import noteapp.ktor.com.security.checkHashForPassword
@@ -9,7 +10,7 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.setValue
 
-private val client = KMongo.createClient().coroutine
+private val client = KMongo.createClient(ConnectionString("mongodb+srv://Hakim:Csun8z2b!@cluster0.mcnrh.mongodb.net/myFirstDatabase?retryWrites=true&w=majorityretryWrites=true&w=majority")).coroutine
 private val databse = client.getDatabase("NotesDatabase")
 private val users = databse.getCollection<User>()
 private val notes = databse.getCollection<Note>()
