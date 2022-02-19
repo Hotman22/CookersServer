@@ -1,4 +1,4 @@
-package cookers.com.security
+package cookers.com.utils
 
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils

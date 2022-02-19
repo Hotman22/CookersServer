@@ -1,8 +1,6 @@
-package cookers.com.routes
+package cookers.com.authentication.login
 
-import io.ktor.routing.*
 import io.ktor.application.call
-import io.ktor.auth.*
 import io.ktor.features.ContentTransformationException
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.HttpStatusCode.Companion.OK
@@ -12,17 +10,14 @@ import io.ktor.routing.Route
 import io.ktor.routing.post
 import io.ktor.routing.route
 import cookers.com.authentication.JwtConfig
-import cookers.com.data.checkPasswordForEmail
-import cookers.com.data.getUser
-import cookers.com.data.requests.AccountRequest
-import cookers.com.data.responses.SimpleResponse
+import cookers.com.utils.SimpleResponse
 import cookers.com.plugins.jwtConfig
 
 fun Route.loginRoute() {
     route("/login") {
         post {
             val request = try {
-                call.receive<AccountRequest>()
+                call.receive<LoginRequest>()
             } catch(e: ContentTransformationException) {
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
@@ -35,13 +30,6 @@ fun Route.loginRoute() {
             } else {
                 call.respond(OK, SimpleResponse(false, "The E-Mail or password is incorrect"))
             }
-        }
-    }
-
-    authenticate {
-        get ("/me"){
-            val user = call.authentication.principal as JwtConfig.JwtUser
-            call.respond(user)
         }
     }
 }

@@ -1,4 +1,4 @@
-package cookers.com.data.requests
+package cookers.com.authentication
 
 data class DeleteNoteRequest(
     val id: String

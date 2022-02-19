@@ -1,31 +1,12 @@
-package cookers.com.data
+package cookers.com
 
-import com.mongodb.ConnectionString
-import cookers.com.data.collections.Note
-import cookers.com.data.collections.User
-import cookers.com.security.checkHashForPassword
+import cookers.com.utils.database
 import org.litote.kmongo.contains
-import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.eq
-import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.setValue
 
-private val client = KMongo.createClient(ConnectionString("mongodb+srv://Hakim:Csun8z2b!@cluster0.mcnrh.mongodb.net/myFirstDatabase?retryWrites=true&w=majorityretryWrites=true&w=majority")).coroutine
-private val databse = client.getDatabase("NotesDatabase")
-private val users = databse.getCollection<User>()
-private val notes = databse.getCollection<Note>()
+private val notes = database.getCollection<Note>()
 
-suspend fun registerUser(user: User): Boolean = users.insertOne(user).wasAcknowledged()
-
-suspend fun checkIfUserExists(email: String): Boolean =
-    users.findOne(User::email eq email) != null
-
-suspend fun checkPasswordForEmail(email: String, passwordToCheck: String): Boolean {
-    val actualPassword = users.findOne(User::email eq email)?.password ?: return false
-    return checkHashForPassword(passwordToCheck, actualPassword)
-}
-
-suspend fun getUser(email: String) = users.findOne(User::email eq email)
 
 suspend fun getNotesForUser(email: String): List<Note> {
     return notes.find(Note::owners contains email).toList()

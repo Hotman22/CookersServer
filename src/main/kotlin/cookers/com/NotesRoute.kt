@@ -1,11 +1,11 @@
 package cookers.com.routes
 
+import cookers.com.*
 import cookers.com.authentication.JwtConfig
-import cookers.com.data.*
-import cookers.com.data.collections.Note
-import cookers.com.data.requests.AddOwnerRequest
-import cookers.com.data.requests.DeleteNoteRequest
-import cookers.com.data.responses.SimpleResponse
+import cookers.com.authentication.createuser.checkIfUserExists
+import cookers.com.authentication.AddOwnerRequest
+import cookers.com.authentication.DeleteNoteRequest
+import cookers.com.utils.SimpleResponse
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
@@ -14,7 +14,7 @@ import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import cookers.com.data.addOwnerToNote as addOwnerToNote1
+import cookers.com.addOwnerToNote as addOwnerToNote1
 
 fun Route.noteRoutes() {
     route("/getNotes") {

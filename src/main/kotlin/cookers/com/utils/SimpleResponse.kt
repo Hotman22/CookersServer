@@ -1,4 +1,4 @@
-package cookers.com.data.responses
+package cookers.com.utils
 
 data class SimpleResponse(
     val successful: Boolean,

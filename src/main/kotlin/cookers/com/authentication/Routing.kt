@@ -8,9 +8,10 @@ import io.ktor.response.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import cookers.com.authentication.JwtConfig
-import cookers.com.routes.loginRoute
+import cookers.com.authentication.fetchuser.fetchUser
+import cookers.com.authentication.login.loginRoute
 import cookers.com.routes.noteRoutes
-import cookers.com.routes.registerRoute
+import cookers.com.authentication.createuser.createUser
 
 val jwtConfig = JwtConfig(System.getenv("KTOR_TODOLIST_JWT_SECRET") ?: "default_value")
 
@@ -39,8 +40,9 @@ private fun Application.configureModule() {
     install(DefaultHeaders)
     install(CallLogging)
     install(Routing) {
-        registerRoute()
+        createUser()
         loginRoute()
+        fetchUser()
         noteRoutes()
     }
 }

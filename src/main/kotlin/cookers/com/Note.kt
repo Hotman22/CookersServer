@@ -1,4 +1,4 @@
-package cookers.com.data.collections
+package cookers.com
 
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
