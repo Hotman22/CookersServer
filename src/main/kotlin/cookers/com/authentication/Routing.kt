@@ -10,7 +10,7 @@ import io.ktor.gson.*
 import cookers.com.authentication.JwtConfig
 import cookers.com.authentication.fetchuser.fetchUser
 import cookers.com.authentication.login.loginRoute
-import cookers.com.routes.noteRoutes
+import cookers.com.noteRoutes
 import cookers.com.authentication.createuser.createUser
 
 val jwtConfig = JwtConfig(System.getenv("KTOR_TODOLIST_JWT_SECRET") ?: "default_value")

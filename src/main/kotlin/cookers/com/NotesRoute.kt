@@ -1,4 +1,4 @@
-package cookers.com.routes
+package cookers.com
 
 import cookers.com.*
 import cookers.com.authentication.JwtConfig
