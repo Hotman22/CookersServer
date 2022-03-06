@@ -23,7 +23,7 @@ fun Route.createUser() {
             }
             val userExists = checkIfUserExists(request.email)
             if(!userExists) {
-                if(registerUser(User(request.email, getHashWithSalt(request.password)))) {
+                if(registerUser(User(request.userName, request.name, request.email, getHashWithSalt(request.password)))) {
                     call.respond(OK, SimpleResponse(true, "Successfully created account!"))
                 } else {
                     call.respond(OK, SimpleResponse(false, "An unknown error occured"))
