@@ -14,7 +14,7 @@ import cookers.com.utils.SimpleResponse
 import cookers.com.plugins.jwtConfig
 
 fun Route.loginRoute() {
-    route("/login") {
+    route("/authentication/login") {
         post {
             val request = try {
                 call.receive<LoginRequest>()

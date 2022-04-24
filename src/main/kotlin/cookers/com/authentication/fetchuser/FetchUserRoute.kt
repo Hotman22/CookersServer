@@ -8,7 +8,7 @@ import io.ktor.routing.*
 
 fun Route.fetchUser() {
     authenticate {
-        get ("/me"){
+        get ("/authentication/fetchuser"){
             val user = call.authentication.principal as JwtConfig.JwtUser
             call.respond(user)
         }

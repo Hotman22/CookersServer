@@ -13,7 +13,7 @@ import cookers.com.utils.SimpleResponse
 import cookers.com.utils.getHashWithSalt
 
 fun Route.createUser() {
-    route("/register") {
+    route("/authentication/register") {
         post {
             val request = try {
                 call.receive<CreateUserRequest>()
