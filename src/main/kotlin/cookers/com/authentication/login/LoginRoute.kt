@@ -12,6 +12,7 @@ import io.ktor.routing.route
 import cookers.com.authentication.JwtConfig
 import cookers.com.utils.SimpleResponse
 import cookers.com.plugins.jwtConfig
+import io.ktor.http.HttpStatusCode.Companion.Unauthorized
 
 fun Route.loginRoute() {
     route("/authentication/login") {
@@ -28,7 +29,7 @@ fun Route.loginRoute() {
                 val token = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
                 call.respond(token)
             } else {
-                call.respond(OK, SimpleResponse(false, "The E-Mail or password is incorrect"))
+                call.respond(Unauthorized, SimpleResponse(false, "The E-Mail or password is incorrect"))
             }
         }
     }
