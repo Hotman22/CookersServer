@@ -69,7 +69,7 @@ fun Route.noteRoutes() {
                     call.respond(BadRequest)
                     return@post
                 }
-                if(!checkIfUserExists(request.owner)) {
+                if(!checkIfUserExists(request.owner, "")) {
                     call.respond(OK, SimpleResponse(false, "No user with this E-Mail exists"))
                     return@post
                 }
