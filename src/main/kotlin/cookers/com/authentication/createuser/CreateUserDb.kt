@@ -8,5 +8,5 @@ private val users = database.getCollection<User>()
 
 suspend fun registerUser(user: User): Boolean = users.insertOne(user).wasAcknowledged()
 
-suspend fun checkIfUserExists(email: String): Boolean = users.findOne(User::email eq email) != null
+suspend fun checkIfUserExists(email: String, userName: String): Boolean = users.findOne(User::email eq email, User::userName eq userName) != null
 
