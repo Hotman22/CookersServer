@@ -24,7 +24,7 @@ fun Route.loginRoute() {
             val user = getUser(request.email)
             if(isPasswordCorrect && user != null) {
                 val token = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
-                call.respond(token)
+                call.respond(LoginResponse(token))
             } else {
                 call.respond(Unauthorized, SimpleResponse(false, "The E-Mail or password is incorrect"))
             }
