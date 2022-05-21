@@ -1,18 +1,15 @@
 package cookers.com.authentication.login
 
-import io.ktor.application.call
-import io.ktor.features.ContentTransformationException
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.HttpStatusCode.Companion.OK
-import io.ktor.request.receive
-import io.ktor.response.respond
-import io.ktor.routing.Route
-import io.ktor.routing.post
-import io.ktor.routing.route
 import cookers.com.authentication.JwtConfig
-import cookers.com.utils.SimpleResponse
 import cookers.com.plugins.jwtConfig
+import cookers.com.utils.SimpleResponse
+import io.ktor.application.*
+import io.ktor.features.ContentTransformationException
+import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
+import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.routing.*
 
 fun Route.loginRoute() {
     route("/authentication/login") {

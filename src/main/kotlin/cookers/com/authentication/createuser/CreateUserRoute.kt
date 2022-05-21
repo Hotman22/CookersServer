@@ -1,16 +1,16 @@
 package cookers.com.authentication.createuser
 
 import cookers.com.authentication.User
+import cookers.com.utils.SimpleResponse
+import cookers.com.utils.getHashWithSalt
 import io.ktor.application.*
 import io.ktor.features.ContentTransformationException
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
+import io.ktor.http.HttpStatusCode.Companion.Conflict
 import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import io.ktor.routing.post
-import cookers.com.utils.SimpleResponse
-import cookers.com.utils.getHashWithSalt
 
 fun Route.createUser() {
     route("/authentication/register") {
@@ -22,15 +22,15 @@ fun Route.createUser() {
                 return@post
             }
             val email = request.email.lowercase()
-            val userExists = checkIfUserExists(email)
+            val userExists = checkIfUserExists(email, request.userName)
             if(!userExists) {
                 if(registerUser(User(request.userName, request.name, email, getHashWithSalt(request.password)))) {
                     call.respond(OK, SimpleResponse(true, "Successfully created account!"))
                 } else {
-                    call.respond(OK, SimpleResponse(false, "An unknown error occured"))
+                    call.respond(BadRequest, SimpleResponse(false, "An unknown error occured"))
                 }
             } else {
-                call.respond(OK, SimpleResponse(false, "A user with that E-Mail already exists"))
+                call.respond(Conflict, SimpleResponse(false, "A user with that E-Mail already exists"))
             }
         }
     }
