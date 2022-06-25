@@ -29,7 +29,7 @@ fun Route.createUser() {
                     call.respond(BadRequest, SimpleResponse(false, "An unknown error occured"))
                 }
             } else {
-                call.respond(Conflict, SimpleResponse(false, "A user with that E-Mail already exists"))
+                call.respond(Conflict, SimpleResponse(false, "A user with that E-Mail or UserName already exists"))
             }
         }
     }
