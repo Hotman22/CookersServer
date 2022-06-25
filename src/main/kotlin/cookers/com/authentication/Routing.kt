@@ -11,6 +11,7 @@ import cookers.com.authentication.fetchuser.fetchUser
 import cookers.com.authentication.login.loginRoute
 import cookers.com.noteRoutes
 import cookers.com.authentication.createuser.createUser
+import cookers.com.recipe.createrecipe.createRecipe
 
 val jwtConfig = JwtConfig(System.getenv("KTOR_TODOLIST_JWT_SECRET") ?: "default_value")
 
@@ -43,5 +44,6 @@ private fun Application.configureModule() {
         loginRoute()
         fetchUser()
         noteRoutes()
+        createRecipe()
     }
 }
