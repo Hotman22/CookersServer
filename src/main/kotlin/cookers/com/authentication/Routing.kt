@@ -1,4 +1,4 @@
-package cookers.com.plugins
+package cookers.com.authentication
 
 import io.ktor.routing.*
 import io.ktor.application.*
@@ -7,7 +7,6 @@ import io.ktor.auth.jwt.*
 import io.ktor.response.*
 import io.ktor.features.*
 import io.ktor.gson.*
-import cookers.com.authentication.JwtConfig
 import cookers.com.authentication.fetchuser.fetchUser
 import cookers.com.authentication.login.loginRoute
 import cookers.com.noteRoutes

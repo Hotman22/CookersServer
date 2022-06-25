@@ -1,8 +1,7 @@
 package cookers.com.authentication.login
 
 import cookers.com.authentication.JwtConfig
-import cookers.com.plugins.jwtConfig
-import cookers.com.utils.SimpleResponse
+import cookers.com.authentication.jwtConfig
 import io.ktor.application.*
 import io.ktor.features.ContentTransformationException
 import io.ktor.http.*
