@@ -3,14 +3,13 @@ package cookers.com.authentication.createuser
 import cookers.com.authentication.User
 import cookers.com.utils.SimpleResponse
 import cookers.com.utils.getHashWithSalt
-import io.ktor.application.*
-import io.ktor.features.ContentTransformationException
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
 import io.ktor.http.HttpStatusCode.Companion.Conflict
 import io.ktor.http.HttpStatusCode.Companion.OK
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 fun Route.createUser() {
     route("/authentication/register") {

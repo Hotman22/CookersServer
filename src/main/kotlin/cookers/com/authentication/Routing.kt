@@ -1,17 +1,19 @@
 package cookers.com.authentication
 
-import io.ktor.routing.*
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.auth.jwt.*
-import io.ktor.response.*
-import io.ktor.features.*
-import io.ktor.gson.*
 import cookers.com.authentication.fetchuser.fetchUser
 import cookers.com.authentication.login.loginRoute
-import cookers.com.noteRoutes
 import cookers.com.authentication.createuser.createUser
 import cookers.com.recipe.createrecipe.createRecipe
+import io.ktor.serialization.gson.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
+import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.defaultheaders.*
+import io.ktor.server.plugins.doublereceive.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 val jwtConfig = JwtConfig(System.getenv("KTOR_TODOLIST_JWT_SECRET") ?: "default_value")
 
@@ -27,6 +29,7 @@ fun Application.configureRouting() {
 }
 
 private fun Application.configureModule() {
+    install(DoubleReceive)
     install(Authentication) {
         jwt {
             jwtConfig.configureKtorFeature(this)
@@ -43,7 +46,7 @@ private fun Application.configureModule() {
         createUser()
         loginRoute()
         fetchUser()
-        noteRoutes()
+        //noteRoutes()
         createRecipe()
     }
 }

@@ -1,43 +1,66 @@
 package cookers.com.recipe.createrecipe
 
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.features.ContentTransformationException
+import cookers.com.authentication.JwtConfig
+import cookers.com.utils.SimpleResponse
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import java.io.File
 
 fun Route.createRecipe() {
     authenticate {
-        var fileDescription = ""
-        var fileName = ""
+        post("/recipe/createrecipe") {
+            var fileName = ""
+            var multipartData: MultiPartData? = null
+            val parameters: Parameters = call.receiveParameters()
+            val user = call.authentication.principal as JwtConfig.JwtUser
 
-        post("/createrecipe") {
-
-            val multipartData = try {
-                call.receiveMultipart()
-            } catch (e: ContentTransformationException) {
+            kotlin.runCatching {
+                multipartData = call.receiveMultipart()
+            }.getOrElse {
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
             }
-            multipartData.forEachPart { part ->
-                when (part) {
-                    is PartData.FormItem -> {
-                        fileDescription = part.value
-                    }
-                    is PartData.FileItem -> {
-                        fileName = part.originalFileName as String
-                        var fileBytes = part.streamProvider().readBytes()
-                        File("uploads/$fileName").writeBytes(fileBytes)
-                    }
+
+            multipartData?.forEachPart { part ->
+                if (part is PartData.FileItem) {
+                    fileName = part.originalFileName as String
+                    part.save(fileName)
                 }
             }
-            call.respondText("$fileDescription is uploaded to 'uploads/$fileName'")
+            with(parameters) {
+                if (get("title").isNullOrBlank() || getAll("steps").isNullOrEmpty() || getAll("ingredients").isNullOrEmpty()) {
+                    call.respond(HttpStatusCode.BadRequest, SimpleResponse(false, "An unknown error occured"))
+                    return@post
+                }
+                if (registerRecipe(createRecipe(this, fileName, user))) {
+                    call.respond(HttpStatusCode.OK, SimpleResponse(true, "Successfully created recipe!"))
+                } else {
+                    call.respond(HttpStatusCode.PartialContent, SimpleResponse(false, "An unknown error occured"))
+                }
+            }
         }
     }
+}
+
+private fun createRecipe(parameters: Parameters, filePath: String, user: JwtConfig.JwtUser): Recipe {
+    with(parameters) {
+        val title = get("title") ?: ""
+        val steps = getAll("steps") ?: emptyList()
+        val ingredients = getAll("ingredients") ?: emptyList()
+        val advice = get("advice") ?: ""
+        return Recipe(title, steps, ingredients, advice, filePath, user.userId, user.userName)
+    }
+}
+
+fun PartData.FileItem.save(fileName: String): String {
+    val fileBytes = this.streamProvider().readBytes()
+    val folder = File("uploads/")
+    folder.mkdir()
+    File("uploads/$fileName").writeBytes(fileBytes)
+    return fileName
 }

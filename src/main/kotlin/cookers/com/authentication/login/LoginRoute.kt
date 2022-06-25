@@ -2,13 +2,12 @@ package cookers.com.authentication.login
 
 import cookers.com.authentication.JwtConfig
 import cookers.com.authentication.jwtConfig
-import io.ktor.application.*
-import io.ktor.features.ContentTransformationException
 import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 fun Route.loginRoute() {
     route("/authentication/login") {
@@ -23,7 +22,7 @@ fun Route.loginRoute() {
             val isPasswordCorrect = checkPasswordForEmail(email, request.password)
             val user = getUser(email)
             if(isPasswordCorrect && user != null) {
-                val token = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email.lowercase()))
+                val token = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
                 val loginResponse = LoginResponse(token)
                 call.respond(loginResponse)
             } else {

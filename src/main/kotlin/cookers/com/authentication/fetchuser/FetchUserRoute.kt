@@ -1,10 +1,10 @@
 package cookers.com.authentication.fetchuser
 
 import cookers.com.authentication.JwtConfig
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 
 fun Route.fetchUser() {
     authenticate {
