@@ -3,6 +3,9 @@ package cookers.com.recipe.createrecipe
 import cookers.com.authentication.JwtConfig
 import cookers.com.utils.SimpleResponse
 import io.ktor.http.*
+import io.ktor.http.HttpStatusCode.Companion.BadRequest
+import io.ktor.http.HttpStatusCode.Companion.NotAcceptable
+import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -34,13 +37,16 @@ fun Route.createRecipe() {
             }
             with(parameters) {
                 if (get("title").isNullOrBlank() || getAll("steps").isNullOrEmpty() || getAll("ingredients").isNullOrEmpty()) {
-                    call.respond(HttpStatusCode.BadRequest, SimpleResponse(false, "An unknown error occured"))
+                    call.respond(
+                        NotAcceptable,
+                        SimpleResponse(false, "The recipe is incomplete, please fill all the fields")
+                    )
                     return@post
                 }
                 if (registerRecipe(createRecipe(this, fileName, user))) {
-                    call.respond(HttpStatusCode.OK, SimpleResponse(true, "Successfully created recipe!"))
+                    call.respond(OK, SimpleResponse(true, "Successfully created recipe!"))
                 } else {
-                    call.respond(HttpStatusCode.PartialContent, SimpleResponse(false, "An unknown error occured"))
+                    call.respond(BadRequest, SimpleResponse(false, "An unknown error occured"))
                 }
             }
         }
