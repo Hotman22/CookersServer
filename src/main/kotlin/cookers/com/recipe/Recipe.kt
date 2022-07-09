@@ -1,4 +1,4 @@
-package cookers.com.recipe.createrecipe
+package cookers.com.recipe
 
 data class Recipe(
     val title: String,

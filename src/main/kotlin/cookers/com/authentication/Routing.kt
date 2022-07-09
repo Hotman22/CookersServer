@@ -4,6 +4,7 @@ import cookers.com.authentication.fetchuser.fetchUser
 import cookers.com.authentication.login.loginRoute
 import cookers.com.authentication.createuser.createUser
 import cookers.com.recipe.createrecipe.createRecipe
+import cookers.com.recipe.fetchrecipe.fetchRecipeRoute
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -43,10 +44,12 @@ private fun Application.configureModule() {
     install(DefaultHeaders)
     install(CallLogging)
     install(Routing) {
+        //authentication route
         createUser()
         loginRoute()
         fetchUser()
-        //noteRoutes()
+        //recipe route
         createRecipe()
+        fetchRecipeRoute()
     }
 }

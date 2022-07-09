@@ -1,6 +1,7 @@
 package cookers.com.recipe.createrecipe
 
 import cookers.com.authentication.JwtConfig
+import cookers.com.recipe.Recipe
 import cookers.com.utils.SimpleResponse
 import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
@@ -25,7 +26,7 @@ fun Route.createRecipe() {
             kotlin.runCatching {
                 multipartData = call.receiveMultipart()
             }.getOrElse {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respond(BadRequest)
                 return@post
             }
 
@@ -37,10 +38,7 @@ fun Route.createRecipe() {
             }
             with(parameters) {
                 if (get("title").isNullOrBlank() || getAll("steps").isNullOrEmpty() || getAll("ingredients").isNullOrEmpty()) {
-                    call.respond(
-                        NotAcceptable,
-                        SimpleResponse(false, "The recipe is incomplete, please fill all the fields")
-                    )
+                    call.respond(NotAcceptable, SimpleResponse(false, "The recipe is incomplete"))
                     return@post
                 }
                 if (registerRecipe(createRecipe(this, fileName, user))) {
