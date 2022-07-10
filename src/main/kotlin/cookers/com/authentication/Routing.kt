@@ -5,6 +5,7 @@ import cookers.com.authentication.login.loginRoute
 import cookers.com.authentication.createuser.createUser
 import cookers.com.recipe.createrecipe.createRecipe
 import cookers.com.recipe.fetchrecipe.fetchRecipeRoute
+import cookers.com.recipe.fetchrecippicture.fetchRecipePictureRoute
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -51,5 +52,6 @@ private fun Application.configureModule() {
         //recipe route
         createRecipe()
         fetchRecipeRoute()
+        fetchRecipePictureRoute()
     }
 }

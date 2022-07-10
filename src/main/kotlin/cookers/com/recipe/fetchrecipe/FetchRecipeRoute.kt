@@ -11,8 +11,8 @@ fun Route.fetchRecipeRoute() {
     authenticate {
         get("/recipe/fetchrecipe") {
             val email = (call.authentication.principal as JwtConfig.JwtUser).userName
-            val notes = getRecipesForUser(email)
-            call.respond(OK, notes)
+            val recipes = getRecipesForUser(email)
+            call.respond(OK, recipes)
         }
     }
 }
