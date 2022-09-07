@@ -22,7 +22,7 @@ fun Route.refreshTokenRoute() {
             val user = getUserById(refreshTokenSession.userId)
             if(user != null && oldRefreshToken == refreshTokenSession.refreshToken) {
                 val accessToken = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
-                val refreshTokenResponse = RefreshTokenResponse(accessToken, oldRefreshToken)
+                val refreshTokenResponse = RefreshTokenResponse(accessToken, oldRefreshTokenO)
                 call.respond(refreshTokenResponse)
             } else {
                 call.respond(HttpStatusCode.Unauthorized)
