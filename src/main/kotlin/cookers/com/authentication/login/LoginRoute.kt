@@ -14,7 +14,7 @@ import io.ktor.server.routing.*
 
 fun Route.loginRoute() {
     authenticate {
-        route("/authentication/refreshtoken") {
+        route("/authentication/login") {
             post {
                 val request = try {
                     call.receive<LoginRequest>()
