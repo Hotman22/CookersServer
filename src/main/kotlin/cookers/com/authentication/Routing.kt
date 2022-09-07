@@ -3,6 +3,7 @@ package cookers.com.authentication
 import cookers.com.authentication.fetchuser.fetchUser
 import cookers.com.authentication.login.loginRoute
 import cookers.com.authentication.createuser.createUser
+import cookers.com.authentication.refreshtoken.refreshTokenRoute
 import cookers.com.recipe.createrecipe.createRecipe
 import cookers.com.recipe.fetchrecipe.fetchRecipeRoute
 import cookers.com.recipe.fetchrecippicture.fetchRecipePictureRoute
@@ -49,6 +50,7 @@ private fun Application.configureModule() {
         createUser()
         loginRoute()
         fetchUser()
+        refreshTokenRoute()
         //recipe route
         createRecipe()
         fetchRecipeRoute()

@@ -19,7 +19,7 @@ class JwtConfig(jwtSecret: String) {
         private const val CLAIM_USERID = "userId"
         private const val CLAIM_USERNAME = "userName"
 
-        private const val TOKEN_VALIDITY_MS = 3000000
+        private const val TOKEN_VALIDITY_MS = 100000
     }
 
     private val jwtAlgorithm = Algorithm.HMAC512(jwtSecret)
@@ -38,6 +38,8 @@ class JwtConfig(jwtSecret: String) {
         .withClaim(CLAIM_USERNAME, user.userName)
         .withExpiresAt(obtainExpirationDate())
         .sign(jwtAlgorithm)
+
+    fun generateRefreshToken() = UUID.randomUUID().toString()
 
     private fun obtainExpirationDate() = Date(System.currentTimeMillis() + TOKEN_VALIDITY_MS)
 

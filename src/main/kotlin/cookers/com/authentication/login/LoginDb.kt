@@ -7,9 +7,11 @@ import org.litote.kmongo.eq
 
 private val users = database.getCollection<User>()
 
-suspend fun checkPasswordForEmail(email: String, passwordToCheck: String): Boolean {
+suspend fun  checkPasswordForEmail(email: String, passwordToCheck: String): Boolean {
     val actualPassword = users.findOne(User::email eq email)?.password ?: return false
     return checkHashForPassword(passwordToCheck, actualPassword)
 }
 
 suspend fun getUser(email: String) = users.findOne(User::email eq email)
+
+var refreshTokenSession: String? = null
