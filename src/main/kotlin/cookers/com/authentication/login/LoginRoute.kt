@@ -13,27 +13,25 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.loginRoute() {
-    authenticate {
-        route("/authentication/login") {
-            post {
-                val request = try {
-                    call.receive<LoginRequest>()
-                } catch (e: ContentTransformationException) {
-                    call.respond(HttpStatusCode.BadRequest)
-                    return@post
-                }
-                val email = request.email.lowercase()
-                val isPasswordCorrect = checkPasswordForEmail(email, request.password)
-                val user = getUser(email)
-                if (isPasswordCorrect && user != null) {
-                    val token = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
-                    val refreshToken = jwtConfig.generateRefreshToken()
-                    val loginResponse = LoginResponse(token, refreshToken)
-                    refreshTokenSession = RefreshTokenSession(user.id, refreshToken)
-                    call.respond(loginResponse)
-                } else {
-                    call.respond(Unauthorized)
-                }
+    route("/authentication/login") {
+        post {
+            val request = try {
+                call.receive<LoginRequest>()
+            } catch (e: ContentTransformationException) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@post
+            }
+            val email = request.email.lowercase()
+            val isPasswordCorrect = checkPasswordForEmail(email, request.password)
+            val user = getUser(email)
+            if (isPasswordCorrect && user != null) {
+                val token = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
+                val refreshToken = jwtConfig.generateRefreshToken()
+                val loginResponse = LoginResponse(token, refreshToken)
+                refreshTokenSession = RefreshTokenSession(user.id, refreshToken)
+                call.respond(loginResponse)
+            } else {
+                call.respond(Unauthorized)
             }
         }
     }
