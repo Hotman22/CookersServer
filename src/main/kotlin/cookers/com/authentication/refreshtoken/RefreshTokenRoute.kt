@@ -1,5 +1,6 @@
 package cookers.com.authentication.refreshtoken
 
+import cookers.com.authentication.JwtConfig
 import cookers.com.authentication.jwtConfig
 import cookers.com.authentication.login.*
 import io.ktor.http.*
@@ -18,11 +19,11 @@ fun Route.refreshTokenRoute() {
                 return@post
             }
             val oldRefreshToken = request.refreshToken
-            if(oldRefreshToken == refreshTokenSession) {
-                val newRefreshToken = jwtConfig.generateRefreshToken()
-                val loginResponse = RefreshTokenResponse(newRefreshToken)
-                refreshTokenSession = newRefreshToken
-                call.respond(loginResponse)
+            val user = getUserById(refreshTokenSession.userId)
+            if(user != null && oldRefreshToken == refreshTokenSession.refreshToken) {
+                val accessToken = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
+                val refreshTokenResponse = RefreshTokenResponse(accessToken)
+                call.respond(refreshTokenResponse)
             } else {
                 call.respond(HttpStatusCode.Unauthorized)
             }

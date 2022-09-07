@@ -11,7 +11,5 @@ suspend fun  checkPasswordForEmail(email: String, passwordToCheck: String): Bool
     val actualPassword = users.findOne(User::email eq email)?.password ?: return false
     return checkHashForPassword(passwordToCheck, actualPassword)
 }
-
 suspend fun getUser(email: String) = users.findOne(User::email eq email)
 
-var refreshTokenSession: String? = null

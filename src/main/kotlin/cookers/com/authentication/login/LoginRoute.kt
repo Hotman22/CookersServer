@@ -1,8 +1,9 @@
 package cookers.com.authentication.login
 
 import cookers.com.authentication.JwtConfig
-import cookers.com.authentication.User
 import cookers.com.authentication.jwtConfig
+import cookers.com.authentication.refreshtoken.RefreshTokenSession
+import cookers.com.authentication.refreshtoken.refreshTokenSession
 import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.Unauthorized
 import io.ktor.server.application.*
@@ -28,7 +29,7 @@ fun Route.loginRoute() {
                     val token = jwtConfig.generateToken(JwtConfig.JwtUser(user.id, user.email))
                     val refreshToken = jwtConfig.generateRefreshToken()
                     val loginResponse = LoginResponse(token, refreshToken)
-                    refreshTokenSession = refreshToken
+                    refreshTokenSession = RefreshTokenSession(user.id, refreshToken)
                     call.respond(loginResponse)
                 } else {
                     call.respond(Unauthorized)
