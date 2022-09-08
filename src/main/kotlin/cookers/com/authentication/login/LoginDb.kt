@@ -13,3 +13,5 @@ suspend fun  checkPasswordForEmail(email: String, passwordToCheck: String): Bool
 }
 suspend fun getUser(email: String) = users.findOne(User::email eq email)
 
+suspend fun getUserById(id: String) = users.findOne(User::id eq id)
+
