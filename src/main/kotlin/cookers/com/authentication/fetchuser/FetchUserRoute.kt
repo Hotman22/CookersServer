@@ -12,12 +12,8 @@ fun Route.fetchUser() {
     authenticate {
         get ("/authentication/fetchuser"){
             val jwtUser = call.authentication.principal as JwtConfig.JwtUser
-            val user = getUser(jwtUser.userMail)
-            user?.let { use ->
-                call.respond(use)
-            } ?: run {
-                call.respond(HttpStatusCode.NotFound)
-            }
+            call.respond(HttpStatusCode.NotFound)
+
         }
     }
 }
