@@ -10,7 +10,7 @@ import io.ktor.server.routing.*
 fun Route.fetchRecipeRoute() {
     authenticate {
         get("/recipe/fetchrecipe") {
-            val email = (call.authentication.principal as JwtConfig.JwtUser).userName
+            val email = (call.authentication.principal as JwtConfig.JwtUser).userMail
             val recipes = getRecipesForUser(email)
             call.respond(OK, recipes)
         }

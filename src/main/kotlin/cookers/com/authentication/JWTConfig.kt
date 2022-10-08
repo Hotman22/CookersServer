@@ -3,7 +3,6 @@ package cookers.com.authentication
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.auth0.jwt.interfaces.Payload
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import java.util.*
@@ -35,7 +34,7 @@ class JwtConfig(jwtSecret: String) {
         .withSubject("Authentication")
         .withIssuer(jwtIssuer)
         .withClaim(CLAIM_USERID, user.userId)
-        .withClaim(CLAIM_USERNAME, user.userName)
+        .withClaim(CLAIM_USERNAME, user.userMail)
         .withExpiresAt(obtainExpirationDate())
         .sign(jwtAlgorithm)
 
@@ -64,5 +63,5 @@ class JwtConfig(jwtSecret: String) {
     /**
      * POKO, that contains information of an authenticated user that is authenticated via jwt
      */
-    data class JwtUser(val userId: String, val userName: String): Principal
+    data class JwtUser(val userId: String, val userMail: String): Principal
 }
