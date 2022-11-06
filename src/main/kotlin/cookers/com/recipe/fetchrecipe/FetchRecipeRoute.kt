@@ -1,6 +1,6 @@
 package cookers.com.recipe.fetchrecipe
 
-import cookers.com.authentication.JwtConfig
+import cookers.com.authentication.domain.util.JwtConfig
 import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

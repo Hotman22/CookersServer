@@ -1,8 +1,9 @@
 package cookers.com.recipe.createrecipe
 
-import cookers.com.authentication.JwtConfig
+import cookers.com.authentication.domain.util.JwtConfig
 import cookers.com.recipe.Recipe
 import cookers.com.utils.SimpleResponse
+import cookers.com.utils.save
 import io.ktor.http.*
 import io.ktor.http.HttpStatusCode.Companion.BadRequest
 import io.ktor.http.HttpStatusCode.Companion.NotAcceptable
@@ -33,7 +34,7 @@ fun Route.createRecipe() {
             multipartData?.forEachPart { part ->
                 if (part is PartData.FileItem) {
                     fileName = part.originalFileName as String
-                    part.save(fileName)
+                    part.save(fileName, "./uploads/recipe/")
                 }
             }
             with(parameters) {
@@ -59,12 +60,4 @@ private fun createRecipe(parameters: Parameters, filePath: String, user: JwtConf
         val advice = get("advice") ?: ""
         return Recipe(title, steps, ingredients, advice, filePath, user.userId, user.userMail)
     }
-}
-
-fun PartData.FileItem.save(fileName: String): String {
-    val fileBytes = this.streamProvider().readBytes()
-    val folder = File("uploads/")
-    folder.mkdir()
-    File("uploads/$fileName").writeBytes(fileBytes)
-    return fileName
 }

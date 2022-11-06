@@ -1,8 +1,8 @@
 //package cookers.com
 //
-//import cookers.com.authentication.AddOwnerRequest
-//import cookers.com.authentication.DeleteNoteRequest
-//import cookers.com.authentication.JwtConfig
+//import cookers.com.AddOwnerRequest
+//import cookers.com.DeleteNoteRequest
+//import cookers.com.authentication.domain.util.JwtConfig
 //import cookers.com.authentication.createuser.checkIfUserExists
 //import cookers.com.utils.SimpleResponse
 //import io.ktor.http.HttpStatusCode.Companion.BadRequest
