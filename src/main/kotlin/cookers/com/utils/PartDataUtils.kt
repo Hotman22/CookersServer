@@ -3,10 +3,10 @@ package cookers.com.utils
 import io.ktor.http.content.*
 import java.io.File
 
-fun PartData.FileItem.save(fileName: String, pathName: String): String {
+fun PartData.FileItem.save(fileName: String): String {
     val fileBytes = this.streamProvider().readBytes()
-    val folder = File(pathName)
+    val folder = File("uploads/")
     folder.mkdir()
-    File("$pathName$fileName").writeBytes(fileBytes)
+    File("uploads/$fileName").writeBytes(fileBytes)
     return fileName
 }
