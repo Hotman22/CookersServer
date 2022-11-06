@@ -10,7 +10,7 @@ fun Route.fetchRecipePicture() {
     authenticate {
         get("/recipe/fetchrecipepicture") {
             val picturePath = call.request.queryParameters["picturePath"]
-            call.respondFile(File("./uploads/recipe/$picturePath"))
+            call.respondFile(File("uploads/recipe/$picturePath"))
         }
     }
 }
