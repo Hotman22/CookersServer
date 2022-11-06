@@ -18,7 +18,7 @@ class JwtConfig(jwtSecret: String) {
         private const val CLAIM_USERID = "userId"
         private const val CLAIM_USERNAME = "userName"
 
-        private const val TOKEN_VALIDITY_MS = 100000
+        private const val TOKEN_VALIDITY_MS = 3000000
     }
 
     private val jwtAlgorithm = Algorithm.HMAC512(jwtSecret)
