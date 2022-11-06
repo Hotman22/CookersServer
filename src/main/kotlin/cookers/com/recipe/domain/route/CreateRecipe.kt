@@ -36,7 +36,7 @@ fun Route.createRecipe(
             multipartData?.forEachPart { part ->
                 if (part is PartData.FileItem) {
                     fileName = part.originalFileName as String
-                    part.save(fileName)
+                    part.save(fileName, "uploads/recipe/")
                 }
             }
             with(parameters) {
