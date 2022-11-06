@@ -3,9 +3,10 @@ package cookers.com
 import cookers.com.authentication.di.AuthenticationRepositoryFactory
 import cookers.com.authentication.domain.route.*
 import cookers.com.authentication.domain.util.JwtConfig
-import cookers.com.recipe.createrecipe.createRecipe
-import cookers.com.recipe.fetchrecipe.fetchRecipeRoute
-import cookers.com.recipe.fetchrecippicture.fetchRecipePictureRoute
+import cookers.com.recipe.domain.route.createRecipe
+import cookers.com.recipe.di.RecipeRepositoryFactory
+import cookers.com.recipe.domain.route.fetchRecipe
+import cookers.com.recipe.domain.route.fetchRecipePicture
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -19,6 +20,7 @@ import io.ktor.server.routing.*
 
 val jwtConfig = JwtConfig(System.getenv("KTOR_TODOLIST_JWT_SECRET") ?: "default_value")
 val authRepository = AuthenticationRepositoryFactory.make()
+val recipeRepository = RecipeRepositoryFactory.make()
 
 fun Application.configureRouting() {
     configureModule()
@@ -48,13 +50,13 @@ private fun Application.configureModule() {
     install(Routing) {
         //authentication route
         createUser(authRepository)
-        loginRoute(authRepository)
+        login(authRepository)
         fetchUser(authRepository)
-        refreshTokenRoute(authRepository)
+        refreshToken(authRepository)
         updateUser(authRepository)
         //recipe route
-        createRecipe()
-        fetchRecipeRoute()
-        fetchRecipePictureRoute()
+        createRecipe(recipeRepository)
+        fetchRecipe(recipeRepository)
+        fetchRecipePicture()
     }
 }

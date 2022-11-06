@@ -11,7 +11,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.refreshTokenRoute(
+fun Route.refreshToken(
     repository: AuthenticationRepository
 ) {
     route("/authentication/refreshtoken") {
