@@ -1,8 +1,8 @@
 package cookers.com.recipe.domain.route
 
 import cookers.com.authentication.domain.util.JwtConfig
-import cookers.com.recipe.createrecipe.registerRecipe
 import cookers.com.recipe.domain.model.Recipe
+import cookers.com.recipe.domain.repository.RecipeRepository
 import cookers.com.utils.SimpleResponse
 import cookers.com.utils.save
 import io.ktor.http.*
@@ -16,7 +16,9 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Route.createRecipe() {
+fun Route.createRecipe(
+    repository: RecipeRepository
+) {
     authenticate {
         post("/recipe/createrecipe") {
             var fileName = ""
@@ -42,7 +44,7 @@ fun Route.createRecipe() {
                     call.respond(NotAcceptable, SimpleResponse(false, "The recipe is incomplete"))
                     return@post
                 }
-                if (registerRecipe(createRecipe(this, fileName, user))) {
+                if (repository.registerRecipe(createRecipe(this, fileName, user))) {
                     call.respond(OK, SimpleResponse(true, "Successfully created recipe!"))
                 } else {
                     call.respond(BadRequest, SimpleResponse(false, "An unknown error occured"))
