@@ -54,6 +54,7 @@ private fun Application.configureModule() {
         fetchUser(authRepository)
         refreshToken(authRepository)
         updateUser(authRepository)
+        fetchUserPicture()
         //recipe route
         createRecipe(recipeRepository)
         fetchRecipe(recipeRepository)
