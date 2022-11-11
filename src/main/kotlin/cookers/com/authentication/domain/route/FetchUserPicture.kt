@@ -8,7 +8,7 @@ import java.io.File
 
 fun Route.fetchUserPicture() {
     authenticate {
-        get("/recipe/fetchuserpicture") {
+        get("/authentication/fetchuserpicture") {
             val picturePath = call.request.queryParameters["picturePath"]
             call.respondFile(File("uploads/user/$picturePath"))
         }
