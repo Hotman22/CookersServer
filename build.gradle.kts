@@ -19,7 +19,6 @@ application {
 
 repositories {
     mavenCentral()
-    jcenter()
     maven("https://kotlin.bintray.com/ktor")
     maven ("https://kotlin.bintray.com/kotlin-js-wrappers")
 }
@@ -44,15 +43,16 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-gson:$ktor_version")
-    implementation("org.litote.kmongo:kmongo:4.0.2")
-    implementation("org.litote.kmongo:kmongo-coroutine:4.0.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-    implementation("commons-codec:commons-codec:1.14")
+    implementation("org.litote.kmongo:kmongo:4.8.0")
+    implementation("org.litote.kmongo:kmongo-coroutine:4.8.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("commons-codec:commons-codec:1.15")
     implementation("io.ktor:ktor-network-tls:$ktor_version")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
     implementation("io.ktor:ktor-server-auth-jwt:$ktor_version")
     implementation("io.ktor:ktor-server-double-receive:$ktor_version")
     implementation("io.ktor:ktor-server-default-headers:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging:$ktor_version")
-
+    implementation("com.auth0:java-jwt:3.18.1")
+    implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
 }

@@ -60,6 +60,11 @@ private fun createRecipe(parameters: Parameters, filePath: String, user: JwtConf
         val steps = getAll("steps") ?: emptyList()
         val ingredients = getAll("ingredients") ?: emptyList()
         val advice = get("advice") ?: ""
-        return Recipe(title, steps, ingredients, advice, filePath, user.userId, user.userMail)
+        val planningTime = get("planningTime") ?: ""
+        val planningUnit = get("planningUnit") ?: ""
+        val cookingTime = get("cookingTime") ?: ""
+        val cookingUnit = get("cookingUnit") ?: ""
+        val peopleNumber = get("peopleNumber") ?: ""
+        return Recipe(title, steps, ingredients, planningTime, planningUnit, cookingTime, cookingUnit, peopleNumber, advice, filePath, user.userId, user.userMail)
     }
 }
