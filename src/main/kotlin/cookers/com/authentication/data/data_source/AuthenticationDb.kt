@@ -26,4 +26,6 @@ class AuthenticationDb {
 
     suspend fun saveUserPicture(userId: String, picturePath: String): Boolean =
         users.updateOne(User::id eq userId, setValue(User::pictureFilePath, picturePath)).wasAcknowledged()
+
+    fun getAllUsers() = users.find()
 }

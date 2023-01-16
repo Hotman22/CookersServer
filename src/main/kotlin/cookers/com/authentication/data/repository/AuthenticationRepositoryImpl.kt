@@ -28,4 +28,6 @@ class AuthenticationRepositoryImpl(
 
     override suspend fun saveUserPicture(userId: String, picturePath: String): Boolean =
         authDb.saveUserPicture(userId, picturePath)
+
+    override suspend fun getAllUsers() = authDb.getAllUsers()
 }

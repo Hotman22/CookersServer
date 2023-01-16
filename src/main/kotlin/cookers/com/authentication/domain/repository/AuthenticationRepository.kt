@@ -2,6 +2,7 @@ package cookers.com.authentication.domain.repository
 
 import cookers.com.authentication.domain.model.Token
 import cookers.com.authentication.domain.model.User
+import org.litote.kmongo.coroutine.CoroutineFindPublisher
 
 interface AuthenticationRepository {
     suspend fun checkIfUserExists(email: String, userName: String): Boolean
@@ -19,4 +20,6 @@ interface AuthenticationRepository {
     suspend fun findToken(refreshToken: String): Token?
 
     suspend fun saveUserPicture(userId: String, picturePath: String): Boolean
+
+    suspend fun getAllUsers(): CoroutineFindPublisher<User>
 }

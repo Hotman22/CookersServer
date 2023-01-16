@@ -9,6 +9,7 @@ data class Recipe(
     var cookingTime: String,
     var cookingUnit: String,
     var peopleNumber: String,
+    var dishType: String,
     val advice: String,
     val filePath: String,
     val userId: String,
