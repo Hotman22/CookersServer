@@ -14,4 +14,6 @@ class RecipeRepositoryImpl(
 
     override suspend fun registerRecipe(recipe: Recipe): Boolean =
         recipeDb.registerRecipe(recipe)
+
+    override suspend fun getAllRecipes() = recipeDb.getAllRecipes()
 }

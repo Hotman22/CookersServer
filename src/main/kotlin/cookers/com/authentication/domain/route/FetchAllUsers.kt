@@ -1,10 +1,12 @@
 package cookers.com.authentication.domain.route
 
+import cookers.com.authentication.domain.model.Users
 import cookers.com.authentication.domain.repository.AuthenticationRepository
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlin.math.ceil
 
 fun Route.fetchAllUsers(
     repository: AuthenticationRepository
@@ -12,10 +14,12 @@ fun Route.fetchAllUsers(
     authenticate {
         get("/authentication/fetchusers") {
             val page = call.request.queryParameters["page"]?.toInt() ?: 1
-            val limit = call.request.queryParameters["limit"]?.toInt() ?: 10
-            val users = repository.getAllUsers().skip(skip = (page - 1) * limit).limit(limit = limit)
+            val size = call.request.queryParameters["size"]?.toInt() ?: 10
+            val allUsers  = repository.getAllUsers()
+            val totalPage = ceil(allUsers.toList().lastIndex.toDouble() / size.toDouble()).toInt()
+            val users = allUsers.skip(skip = (page - 1) * size).limit(limit = size)
                 .partial(true).toList()
-            call.respond(users)
+            call.respond(Users(totalPage, users))
         }
     }
 }

@@ -11,4 +11,6 @@ class RecipeDb {
 
     suspend fun getRecipesForUser(email: String): List<Recipe> =
         recipes.find(Recipe::userName.eq(email)).toList()
+
+    fun getAllRecipes() = recipes.find()
 }
