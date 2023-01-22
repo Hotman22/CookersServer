@@ -5,6 +5,7 @@ import cookers.com.authentication.domain.route.*
 import cookers.com.authentication.domain.util.JwtConfig
 import cookers.com.recipe.domain.route.createRecipe
 import cookers.com.recipe.di.RecipeRepositoryFactory
+import cookers.com.recipe.domain.route.fetchAllRecipes
 import cookers.com.recipe.domain.route.fetchRecipe
 import cookers.com.recipe.domain.route.fetchRecipePicture
 import io.ktor.serialization.gson.*
@@ -60,5 +61,6 @@ private fun Application.configureModule() {
         createRecipe(recipeRepository)
         fetchRecipe(recipeRepository)
         fetchRecipePicture()
+        fetchAllRecipes(recipeRepository)
     }
 }

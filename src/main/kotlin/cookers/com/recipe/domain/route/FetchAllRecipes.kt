@@ -8,7 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlin.math.ceil
 
-fun Route.fetchAllUsers(
+fun Route.fetchAllRecipes(
     repository: RecipeRepository
 ) {
     authenticate {
