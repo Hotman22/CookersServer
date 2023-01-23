@@ -12,7 +12,7 @@ fun Route.fetchAllRecipes(
     repository: RecipeRepository
 ) {
     authenticate {
-        get("/authentication/fetchrecipes") {
+        get("/recipe/fetchrecipes") {
             val page = call.request.queryParameters["page"]?.toInt() ?: 1
             val size = call.request.queryParameters["size"]?.toInt() ?: 10
             val allRecipes  = repository.getAllRecipes()

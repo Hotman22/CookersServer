@@ -2,5 +2,5 @@ package cookers.com.recipe.domain.model
 
 data class Recipes(
     val totalPage: Int,
-    val users: List<Recipe>,
+    val recipes: List<Recipe>,
 )
