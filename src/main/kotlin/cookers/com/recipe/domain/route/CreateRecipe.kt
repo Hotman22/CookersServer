@@ -1,5 +1,7 @@
 package cookers.com.recipe.domain.route
 
+import cookers.com.authentication.domain.model.User
+import cookers.com.authentication.domain.repository.AuthenticationRepository
 import cookers.com.authentication.domain.util.JwtConfig
 import cookers.com.recipe.domain.model.Recipe
 import cookers.com.recipe.domain.repository.RecipeRepository
@@ -17,15 +19,16 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.createRecipe(
-    repository: RecipeRepository
+    repository: RecipeRepository,
+    authRepository: AuthenticationRepository,
 ) {
     authenticate {
         post("/recipe/createrecipe") {
             var fileName = ""
             var multipartData: MultiPartData? = null
             val parameters: Parameters = call.receiveParameters()
-            val user = call.authentication.principal as JwtConfig.JwtUser
-
+            val userJwt = call.authentication.principal as JwtConfig.JwtUser
+            val user = authRepository.getUserById(userJwt.userId)
             kotlin.runCatching {
                 multipartData = call.receiveMultipart()
             }.getOrElse {
@@ -44,7 +47,7 @@ fun Route.createRecipe(
                     call.respond(NotAcceptable, SimpleResponse(false, "The recipe is incomplete"))
                     return@post
                 }
-                if (repository.registerRecipe(createRecipe(this, fileName, user))) {
+                if (repository.registerRecipe(createRecipe(this, fileName, user,))) {
                     call.respond(OK, SimpleResponse(true, "Successfully created recipe!"))
                 } else {
                     call.respond(BadRequest, SimpleResponse(false, "An unknown error occured"))
@@ -54,7 +57,7 @@ fun Route.createRecipe(
     }
 }
 
-private fun createRecipe(parameters: Parameters, filePath: String, user: JwtConfig.JwtUser): Recipe {
+private fun createRecipe(parameters: Parameters, filePath: String, user: User?): Recipe {
     with(parameters) {
         val title = get("title") ?: ""
         val steps = getAll("steps") ?: emptyList()
@@ -66,6 +69,6 @@ private fun createRecipe(parameters: Parameters, filePath: String, user: JwtConf
         val cookingUnit = get("cookingUnit") ?: ""
         val peopleNumber = get("peopleNumber") ?: ""
         val dishType = get("dishType") ?: ""
-        return Recipe(title, steps, ingredients, planningTime, planningUnit, cookingTime, cookingUnit, peopleNumber, dishType, advice, filePath, user.userId, user.userMail)
+        return Recipe(title, steps, ingredients, planningTime, planningUnit, cookingTime, cookingUnit, peopleNumber, dishType, advice, filePath, user?.id ?: "", user?.userName ?: "")
     }
 }
