@@ -3,11 +3,8 @@ package cookers.com
 import cookers.com.authentication.di.AuthenticationRepositoryFactory
 import cookers.com.authentication.domain.route.*
 import cookers.com.authentication.domain.util.JwtConfig
-import cookers.com.recipe.domain.route.createRecipe
 import cookers.com.recipe.di.RecipeRepositoryFactory
-import cookers.com.recipe.domain.route.fetchAllRecipes
-import cookers.com.recipe.domain.route.fetchRecipe
-import cookers.com.recipe.domain.route.fetchRecipePicture
+import cookers.com.recipe.domain.route.*
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -57,10 +54,12 @@ private fun Application.configureModule() {
         updateUser(authRepository)
         fetchUserPicture()
         fetchAllUsers(authRepository)
+        fetchUserById(authRepository)
         //recipe route
         createRecipe(recipeRepository, authRepository)
         fetchRecipe(recipeRepository)
         fetchRecipePicture()
+        fetchUserRecipe(recipeRepository)
         fetchAllRecipes(recipeRepository)
     }
 }

@@ -2,6 +2,7 @@ package cookers.com.recipe.data.data_source
 
 import cookers.com.recipe.domain.model.Recipe
 import cookers.com.utils.database
+import org.litote.kmongo.coroutine.CoroutineFindPublisher
 import org.litote.kmongo.eq
 
 class RecipeDb {
@@ -11,6 +12,9 @@ class RecipeDb {
 
     suspend fun getRecipesForUser(email: String): List<Recipe> =
         recipes.find(Recipe::userName.eq(email)).toList()
+
+    fun getRecipesByUserId(id: String): CoroutineFindPublisher<Recipe> =
+        recipes.find(Recipe::userId.eq(id))
 
     fun getAllRecipes() = recipes.find()
 }

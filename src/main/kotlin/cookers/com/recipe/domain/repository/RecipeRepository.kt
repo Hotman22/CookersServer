@@ -7,5 +7,8 @@ interface RecipeRepository {
     suspend fun getRecipesForUser(email: String): List<Recipe>
 
     suspend fun registerRecipe(recipe: Recipe): Boolean
+
     suspend fun getAllRecipes(): CoroutineFindPublisher<Recipe>
+
+    suspend fun getRecipesByUserId(id: String): CoroutineFindPublisher<Recipe>
 }
