@@ -30,4 +30,10 @@ class AuthenticationRepositoryImpl(
         authDb.saveUserPicture(userId, picturePath)
 
     override suspend fun getAllUsers() = authDb.getAllUsers()
+
+    override suspend fun subscribeToUser(currentUser: User, userIdToSubscribe: String) =
+        authDb.subscribeToUser(currentUser, userIdToSubscribe)
+
+    override suspend fun unsubscribeToUser(currentUser: User, userIdToUnSubscribe: String): Boolean =
+        authDb.unsubscribeToUser(currentUser, userIdToUnSubscribe)
 }

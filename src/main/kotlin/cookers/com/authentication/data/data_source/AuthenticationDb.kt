@@ -28,4 +28,21 @@ class AuthenticationDb {
         users.updateOne(User::id eq userId, setValue(User::pictureFilePath, picturePath)).wasAcknowledged()
 
     fun getAllUsers() = users.find()
+
+    suspend fun subscribeToUser(currentUser: User, userIdToSubscribe: String): Boolean {
+        if (!currentUser.subscriptions.contains(userIdToSubscribe)) {
+            currentUser.subscriptions.add(userIdToSubscribe)
+        return users.updateOne(User::id eq currentUser.id, setValue(User::subscriptions, currentUser.subscriptions))
+            .wasAcknowledged()}
+        return false
+
+    }
+
+    suspend fun unsubscribeToUser(currentUser: User, userIdToSubscribe: String): Boolean {
+        if (currentUser.subscriptions.contains(userIdToSubscribe)) {
+            currentUser.subscriptions.remove(userIdToSubscribe)
+            return users.updateOne(User::id eq currentUser.id, setValue(User::subscriptions, currentUser.subscriptions))
+                .wasAcknowledged()}
+        return false
+    }
 }

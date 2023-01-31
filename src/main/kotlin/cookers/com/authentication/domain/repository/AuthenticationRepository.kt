@@ -22,4 +22,8 @@ interface AuthenticationRepository {
     suspend fun saveUserPicture(userId: String, picturePath: String): Boolean
 
     suspend fun getAllUsers(): CoroutineFindPublisher<User>
+
+    suspend fun subscribeToUser(currentUser: User, userIdToSubscribe: String): Boolean
+
+    suspend fun unsubscribeToUser(currentUser: User, userIdToUnSubscribe: String): Boolean
 }

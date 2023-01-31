@@ -12,6 +12,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.util.*
 
 fun Route.updateUser(
     repository: AuthenticationRepository
@@ -31,7 +32,7 @@ fun Route.updateUser(
 
             multipartData?.forEachPart { part ->
                 if (part is PartData.FileItem) {
-                    fileName = part.originalFileName as String
+                    fileName = "${part.originalFileName}${UUID.randomUUID()}"
                     part.save(fileName, "uploads/user/")
                 }
             }

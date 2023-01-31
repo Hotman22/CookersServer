@@ -9,6 +9,7 @@ data class User (
     val email: String,
     val password: String,
     val pictureFilePath: String? = null,
+    val subscriptions: MutableList<String> = mutableListOf(),
     @BsonId
     val id: String = ObjectId().toString()
 )

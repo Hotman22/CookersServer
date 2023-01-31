@@ -13,8 +13,8 @@ fun Route.fetchRecipe(
 ) {
     authenticate {
         get("/recipe/fetchrecipe") {
-            val email = (call.authentication.principal as JwtConfig.JwtUser).userMail
-            val recipes = repository.getRecipesForUser(email)
+            val userId = (call.authentication.principal as JwtConfig.JwtUser).userId
+            val recipes = repository.getRecipesByUserId(userId).toList()
             call.respond(OK, recipes)
         }
     }
