@@ -49,7 +49,7 @@ private fun Application.configureModule() {
         //authentication route
         createUser(authRepository)
         login(authRepository)
-        fetchUser(authRepository)
+        fetchUser(authRepository, recipeRepository)
         refreshToken(authRepository)
         updateUser(authRepository)
         fetchUserPicture()

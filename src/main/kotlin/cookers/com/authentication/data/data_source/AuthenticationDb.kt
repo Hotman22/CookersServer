@@ -45,4 +45,13 @@ class AuthenticationDb {
                 .wasAcknowledged()}
         return false
     }
+
+    suspend fun getUserSubscribers(currentUserId: String): List<String> {
+        val subscribers = mutableListOf<String>()
+        getAllUsers().toList().forEach { user ->
+            if (user.subscriptions.contains(currentUserId)) subscribers.add(user.id)
+        }
+
+        return subscribers
+    }
 }

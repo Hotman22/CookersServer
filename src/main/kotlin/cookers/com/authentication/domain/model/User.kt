@@ -10,6 +10,8 @@ data class User (
     val password: String,
     val pictureFilePath: String? = null,
     val subscriptions: MutableList<String> = mutableListOf(),
+    var recipesNumber: Int = 0,
+    var subscribers: Int = 0,
     @BsonId
     val id: String = ObjectId().toString()
 )

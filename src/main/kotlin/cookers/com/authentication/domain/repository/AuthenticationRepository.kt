@@ -26,4 +26,6 @@ interface AuthenticationRepository {
     suspend fun subscribeToUser(currentUser: User, userIdToSubscribe: String): Boolean
 
     suspend fun unsubscribeToUser(currentUser: User, userIdToUnSubscribe: String): Boolean
+
+    suspend fun getUserSubscribers(currentUserId: String): List<String>
 }

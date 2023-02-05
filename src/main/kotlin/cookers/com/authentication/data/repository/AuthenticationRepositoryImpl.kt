@@ -36,4 +36,7 @@ class AuthenticationRepositoryImpl(
 
     override suspend fun unsubscribeToUser(currentUser: User, userIdToUnSubscribe: String): Boolean =
         authDb.unsubscribeToUser(currentUser, userIdToUnSubscribe)
+
+    override suspend fun getUserSubscribers(currentUserId: String): List<String> =
+        authDb.getUserSubscribers(currentUserId)
 }
