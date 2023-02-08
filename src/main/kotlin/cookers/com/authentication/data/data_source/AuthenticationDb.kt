@@ -3,9 +3,7 @@ package cookers.com.authentication.data.data_source
 import cookers.com.authentication.domain.model.User
 import cookers.com.utils.checkHashForPassword
 import cookers.com.utils.database
-import org.litote.kmongo.eq
-import org.litote.kmongo.or
-import org.litote.kmongo.setValue
+import org.litote.kmongo.*
 
 class AuthenticationDb {
     private val users = database.getCollection<User>()
@@ -32,8 +30,12 @@ class AuthenticationDb {
     suspend fun subscribeToUser(currentUser: User, userIdToSubscribe: String): Boolean {
         if (!currentUser.subscriptions.contains(userIdToSubscribe)) {
             currentUser.subscriptions.add(userIdToSubscribe)
-        return users.updateOne(User::id eq currentUser.id, setValue(User::subscriptions, currentUser.subscriptions))
-            .wasAcknowledged()}
+            return users.updateOne(User::id eq currentUser.id, setValue(User::subscriptions, currentUser.subscriptions))
+                .wasAcknowledged() && users.updateOne(
+                User::id eq userIdToSubscribe,
+                inc(User::subscribers, 1)
+            ).wasAcknowledged()
+        }
         return false
 
     }
@@ -42,7 +44,11 @@ class AuthenticationDb {
         if (currentUser.subscriptions.contains(userIdToSubscribe)) {
             currentUser.subscriptions.remove(userIdToSubscribe)
             return users.updateOne(User::id eq currentUser.id, setValue(User::subscriptions, currentUser.subscriptions))
-                .wasAcknowledged()}
+                .wasAcknowledged() && users.updateOne(
+                User::id eq userIdToSubscribe,
+                inc(User::subscribers, -1)
+            ).wasAcknowledged()
+        }
         return false
     }
 

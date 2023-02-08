@@ -54,7 +54,7 @@ private fun Application.configureModule() {
         updateUser(authRepository)
         fetchUserPicture()
         fetchAllUsers(authRepository)
-        fetchUserById(authRepository)
+        fetchUserById(authRepository, recipeRepository)
         subscribeToUser(authRepository)
         unsubscribeToUser(authRepository)
         //recipe route
