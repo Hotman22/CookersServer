@@ -2,6 +2,7 @@ package cookers.com.recipe.domain.route
 
 import cookers.com.recipe.domain.model.Recipes
 import cookers.com.recipe.domain.repository.RecipeRepository
+import io.ktor.http.HttpStatusCode.Companion.OK
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.response.*
@@ -19,7 +20,7 @@ fun Route.fetchAllRecipes(
             val totalPage = ceil(allRecipes.toList().size.toDouble() / size.toDouble()).toInt()
             val recipes = allRecipes.skip(skip = (page - 1) * size).limit(limit = size)
                 .partial(true).toList()
-            call.respond(Recipes(totalPage, recipes))
+            call.respond(OK, Recipes(totalPage, recipes))
         }
     }
 }
