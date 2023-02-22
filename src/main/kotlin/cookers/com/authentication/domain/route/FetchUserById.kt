@@ -1,7 +1,6 @@
 package cookers.com.authentication.domain.route
 
 import cookers.com.authentication.domain.repository.AuthenticationRepository
-import cookers.com.authentication.domain.util.JwtConfig
 import cookers.com.recipe.domain.repository.RecipeRepository
 import io.ktor.http.*
 import io.ktor.server.application.*

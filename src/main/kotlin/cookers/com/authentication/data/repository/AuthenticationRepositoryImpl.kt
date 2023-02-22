@@ -39,4 +39,11 @@ class AuthenticationRepositoryImpl(
 
     override suspend fun getUserSubscribers(currentUserId: String): List<String> =
         authDb.getUserSubscribers(currentUserId)
+
+    override suspend fun addRecipeFavorite(currentUser: User, recipeIdToAdd: String) =
+        authDb.addRecipeFavorite(currentUser, recipeIdToAdd)
+
+    override suspend fun removeRecipeFavorite(currentUser: User, recipeIdToAdd: String) =
+        authDb.removeRecipeFavorite(currentUser, recipeIdToAdd)
+
 }

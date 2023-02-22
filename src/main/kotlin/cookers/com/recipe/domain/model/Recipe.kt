@@ -1,5 +1,8 @@
 package cookers.com.recipe.domain.model
 
+import org.bson.codecs.pojo.annotations.BsonId
+import org.bson.types.ObjectId
+
 data class Recipe(
     val title: String,
     val steps: List<String>,
@@ -13,5 +16,7 @@ data class Recipe(
     val advice: String,
     val filePath: String,
     val userId: String,
-    val userName: String
+    val userName: String,
+    @BsonId
+    val id: String = ObjectId().toString(),
 )

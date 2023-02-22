@@ -37,7 +37,6 @@ class AuthenticationDb {
             ).wasAcknowledged()
         }
         return false
-
     }
 
     suspend fun unsubscribeToUser(currentUser: User, userIdToSubscribe: String): Boolean {
@@ -59,5 +58,23 @@ class AuthenticationDb {
         }
 
         return subscribers
+    }
+
+    suspend fun addRecipeFavorite(currentUser: User, recipeIdToAdd: String): Boolean {
+        if (!currentUser.recipeFavorites.contains(recipeIdToAdd)) {
+            currentUser.recipeFavorites.add(recipeIdToAdd)
+            return users.updateOne(User::id eq currentUser.id, setValue(User::recipeFavorites, currentUser.recipeFavorites))
+                .wasAcknowledged()
+        }
+        return false
+    }
+
+    suspend fun removeRecipeFavorite(currentUser: User, recipeIdToRemove: String): Boolean {
+        if (currentUser.recipeFavorites.contains(recipeIdToRemove)) {
+            currentUser.recipeFavorites.remove(recipeIdToRemove)
+            return users.updateOne(User::id eq currentUser.id, setValue(User::recipeFavorites, currentUser.recipeFavorites))
+                .wasAcknowledged()
+        }
+        return false
     }
 }

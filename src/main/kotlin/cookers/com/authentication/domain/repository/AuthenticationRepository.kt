@@ -28,4 +28,8 @@ interface AuthenticationRepository {
     suspend fun unsubscribeToUser(currentUser: User, userIdToUnSubscribe: String): Boolean
 
     suspend fun getUserSubscribers(currentUserId: String): List<String>
+
+    suspend fun addRecipeFavorite(currentUser: User, recipeIdToAdd: String): Boolean
+
+    suspend fun removeRecipeFavorite(currentUser: User, recipeIdToAdd: String): Boolean
 }
