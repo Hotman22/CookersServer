@@ -11,4 +11,6 @@ interface RecipeRepository {
     suspend fun getAllRecipes(): CoroutineFindPublisher<Recipe>
 
     suspend fun getRecipesByUserId(id: String): CoroutineFindPublisher<Recipe>
+
+    suspend fun getRecipesFavorite(recipesFavorite: List<String>): CoroutineFindPublisher<Recipe>
 }

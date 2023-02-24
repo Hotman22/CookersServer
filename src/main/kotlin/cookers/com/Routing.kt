@@ -3,6 +3,7 @@ package cookers.com
 import cookers.com.authentication.di.AuthenticationRepositoryFactory
 import cookers.com.authentication.domain.route.*
 import cookers.com.authentication.domain.route.favorites.addRecipeFavorite
+import cookers.com.authentication.domain.route.favorites.fetchRecipeFavorite
 import cookers.com.authentication.domain.route.favorites.removeRecipeFavorite
 import cookers.com.authentication.domain.route.fetchAllUsers
 import cookers.com.authentication.domain.route.fetchUser
@@ -64,6 +65,7 @@ private fun Application.configureModule() {
         unsubscribeToUser(authRepository)
         addRecipeFavorite(authRepository)
         removeRecipeFavorite(authRepository)
+        fetchRecipeFavorite(authRepository, recipeRepository)
         //recipe route
         createRecipe(recipeRepository, authRepository)
         fetchRecipe(recipeRepository)

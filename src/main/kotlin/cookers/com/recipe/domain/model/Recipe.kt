@@ -1,6 +1,7 @@
 package cookers.com.recipe.domain.model
 
 import org.bson.codecs.pojo.annotations.BsonId
+import org.bson.codecs.pojo.annotations.BsonProperty
 import org.bson.types.ObjectId
 
 data class Recipe(
@@ -18,5 +19,6 @@ data class Recipe(
     val userId: String,
     val userName: String,
     @BsonId
+    @field:BsonProperty(useDiscriminator = true)
     val id: String = ObjectId().toString(),
 )

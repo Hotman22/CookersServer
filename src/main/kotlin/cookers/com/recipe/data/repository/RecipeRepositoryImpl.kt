@@ -3,9 +3,7 @@ package cookers.com.recipe.data.repository
 import cookers.com.recipe.data.data_source.RecipeDb
 import cookers.com.recipe.domain.model.Recipe
 import cookers.com.recipe.domain.repository.RecipeRepository
-import cookers.com.utils.database
 import org.litote.kmongo.coroutine.CoroutineFindPublisher
-import org.litote.kmongo.eq
 
 class RecipeRepositoryImpl(
     private val recipeDb: RecipeDb
@@ -20,4 +18,7 @@ class RecipeRepositoryImpl(
         recipeDb.registerRecipe(recipe)
 
     override suspend fun getAllRecipes() = recipeDb.getAllRecipes()
+
+    override suspend fun getRecipesFavorite(recipesFavorite: List<String>): CoroutineFindPublisher<Recipe> =
+        recipeDb.getRecipesFavorite(recipesFavorite)
 }
