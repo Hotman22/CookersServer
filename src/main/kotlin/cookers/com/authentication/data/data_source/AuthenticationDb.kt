@@ -1,9 +1,11 @@
 package cookers.com.authentication.data.data_source
 
 import cookers.com.authentication.domain.model.User
+import cookers.com.recipe.domain.model.Recipe
 import cookers.com.utils.checkHashForPassword
 import cookers.com.utils.database
 import org.litote.kmongo.*
+import org.litote.kmongo.coroutine.CoroutineFindPublisher
 
 class AuthenticationDb {
     private val users = database.getCollection<User>()
@@ -77,4 +79,7 @@ class AuthenticationDb {
         }
         return false
     }
+
+    fun getUserSubscriptions(userSubscriptions: List<String>): CoroutineFindPublisher<User>  =
+        users.find(Recipe::id.`in`(userSubscriptions))
 }

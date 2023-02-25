@@ -32,4 +32,6 @@ interface AuthenticationRepository {
     suspend fun addRecipeFavorite(currentUser: User, recipeIdToAdd: String): Boolean
 
     suspend fun removeRecipeFavorite(currentUser: User, recipeIdToAdd: String): Boolean
+
+    suspend fun getUsersSubscriptions(userSubscriptions: List<String>): CoroutineFindPublisher<User>
 }

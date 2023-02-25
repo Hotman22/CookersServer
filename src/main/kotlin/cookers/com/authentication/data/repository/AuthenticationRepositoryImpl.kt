@@ -5,6 +5,7 @@ import cookers.com.authentication.data.data_source.RefreshTokenDb
 import cookers.com.authentication.domain.model.Token
 import cookers.com.authentication.domain.model.User
 import cookers.com.authentication.domain.repository.AuthenticationRepository
+import org.litote.kmongo.coroutine.CoroutineFindPublisher
 
 class AuthenticationRepositoryImpl(
     private val authDb: AuthenticationDb,
@@ -46,4 +47,6 @@ class AuthenticationRepositoryImpl(
     override suspend fun removeRecipeFavorite(currentUser: User, recipeIdToAdd: String) =
         authDb.removeRecipeFavorite(currentUser, recipeIdToAdd)
 
+    override suspend fun getUsersSubscriptions(userSubscriptions: List<String>): CoroutineFindPublisher<User> =
+        authDb.getUserSubscriptions(userSubscriptions)
 }
