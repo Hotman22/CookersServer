@@ -27,7 +27,7 @@ class AuthenticationDb {
     suspend fun saveUserPicture(userId: String, picturePath: String): Boolean =
         users.updateOne(User::id eq userId, setValue(User::pictureFilePath, picturePath)).wasAcknowledged()
 
-    fun getAllUsers() = users.find()
+    fun getAllUsers(userId: String) = users.find(User::id ne userId)
 
     suspend fun subscribeToUser(currentUser: User, userIdToSubscribe: String): Boolean {
         if (!currentUser.subscriptions.contains(userIdToSubscribe)) {
@@ -55,7 +55,7 @@ class AuthenticationDb {
 
     suspend fun getUserSubscribers(currentUserId: String): List<String> {
         val subscribers = mutableListOf<String>()
-        getAllUsers().toList().forEach { user ->
+        getAllUsers(currentUserId).toList().forEach { user ->
             if (user.subscriptions.contains(currentUserId)) subscribers.add(user.id)
         }
 

@@ -8,9 +8,17 @@ interface RecipeRepository {
 
     suspend fun registerRecipe(recipe: Recipe): Boolean
 
-    suspend fun getAllRecipes(): CoroutineFindPublisher<Recipe>
+    suspend fun getAllRecipes(userId: String): CoroutineFindPublisher<Recipe>
 
     suspend fun getRecipesByUserId(id: String): CoroutineFindPublisher<Recipe>
 
     suspend fun getRecipesFavorite(recipesFavorite: List<String>): CoroutineFindPublisher<Recipe>
+
+    suspend fun getRecipesFromSubscription(subscriptions: List<String>, recipeFavorites: MutableList<String>): CoroutineFindPublisher<Recipe>
+
+    suspend fun getRecipesNotFromSubscription(
+        userId: String,
+        subscriptions: List<String>,
+        recipeFavorites: MutableList<String>
+    ): CoroutineFindPublisher<Recipe>
 }

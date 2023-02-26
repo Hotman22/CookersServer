@@ -17,8 +17,18 @@ class RecipeRepositoryImpl(
     override suspend fun registerRecipe(recipe: Recipe): Boolean =
         recipeDb.registerRecipe(recipe)
 
-    override suspend fun getAllRecipes() = recipeDb.getAllRecipes()
+    override suspend fun getAllRecipes(userId: String) = recipeDb.getAllRecipes(userId)
 
     override suspend fun getRecipesFavorite(recipesFavorite: List<String>): CoroutineFindPublisher<Recipe> =
         recipeDb.getRecipesFavorite(recipesFavorite)
+
+    override suspend fun getRecipesFromSubscription(subscriptions: List<String>, recipeFavorites: MutableList<String>): CoroutineFindPublisher<Recipe> =
+        recipeDb.getRecipesFromSubscription(subscriptions, recipeFavorites)
+
+    override suspend  fun getRecipesNotFromSubscription(
+        userId: String,
+        subscriptions: List<String>,
+        recipeFavorites: MutableList<String>
+    ): CoroutineFindPublisher<Recipe> =
+            recipeDb.getRecipesNotFromSubscription(userId, subscriptions, recipeFavorites)
 }

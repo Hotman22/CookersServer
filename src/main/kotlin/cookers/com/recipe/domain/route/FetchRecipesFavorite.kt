@@ -16,7 +16,7 @@ fun Route.fetchRecipeFavorite(
     recipeRepository: RecipeRepository,
 ) {
     authenticate {
-        get("/authentication/fetchrecipefavorite") {
+        get("/recipe/fetchrecipefavorite") {
             val userJwt = call.authentication.principal as JwtConfig.JwtUser
             val currentUser = authRepository.getUserById(userJwt.userId)
             val page = call.request.queryParameters["page"]?.toInt() ?: 1
