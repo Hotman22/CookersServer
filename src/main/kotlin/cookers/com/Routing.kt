@@ -75,5 +75,6 @@ private fun Application.configureModule() {
         fetchRecipeFavorite(authRepository, recipeRepository)
         fetchSubscriptionsRecipes(authRepository, recipeRepository)
         fetchNotSubscriptionsRecipes(authRepository, recipeRepository)
+        deleteRecipe(recipeRepository)
     }
 }

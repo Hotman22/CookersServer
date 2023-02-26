@@ -31,4 +31,7 @@ class RecipeRepositoryImpl(
         recipeFavorites: MutableList<String>
     ): CoroutineFindPublisher<Recipe> =
             recipeDb.getRecipesNotFromSubscription(userId, subscriptions, recipeFavorites)
+
+    override suspend fun deleteRecipe(recipeId: String) : Boolean =
+        recipeDb.deleteRecipe(recipeId)
 }

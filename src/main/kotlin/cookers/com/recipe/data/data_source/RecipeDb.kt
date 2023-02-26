@@ -27,4 +27,7 @@ class RecipeDb {
 
     fun getRecipesNotFromSubscription(userId: String, subscriptions: List<String>, recipeFavorites: MutableList<String>): CoroutineFindPublisher<Recipe> =
         recipes.find(and(Recipe::userId.nin(subscriptions), Recipe::userId ne userId, Recipe::id.nin(recipeFavorites)))
+
+    suspend fun deleteRecipe(recipeId: String): Boolean =
+        recipes.deleteOneById(recipeId).wasAcknowledged()
 }

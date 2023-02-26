@@ -21,4 +21,6 @@ interface RecipeRepository {
         subscriptions: List<String>,
         recipeFavorites: MutableList<String>
     ): CoroutineFindPublisher<Recipe>
+
+    suspend fun deleteRecipe(recipeId: String): Boolean
 }
