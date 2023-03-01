@@ -12,7 +12,7 @@ fun Route.deleteRecipe(
     recipeRepository: RecipeRepository,
 ) {
     authenticate {
-        post("/recipe/fetchrecipesubscriptions") {
+        post("/recipe/deleterecipe") {
             val recipeId = call.request.queryParameters["id"]
             recipeId?.let { id ->
                 if (recipeRepository.deleteRecipe(recipeId)) {
