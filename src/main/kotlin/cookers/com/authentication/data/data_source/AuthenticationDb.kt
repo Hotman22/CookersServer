@@ -22,6 +22,8 @@ class AuthenticationDb {
 
     suspend fun getUser(email: String) = users.findOne(User::email eq email)
 
+    suspend fun deleteUser(email: String): Boolean = users.deleteOne(User::email eq email).wasAcknowledged()
+
     suspend fun getUserById(id: String) = users.findOne(User::id eq id)
 
     suspend fun saveUserPicture(userId: String, picturePath: String): Boolean =
@@ -65,7 +67,10 @@ class AuthenticationDb {
     suspend fun addRecipeFavorite(currentUser: User, recipeIdToAdd: String): Boolean {
         if (!currentUser.recipeFavorites.contains(recipeIdToAdd)) {
             currentUser.recipeFavorites.add(recipeIdToAdd)
-            return users.updateOne(User::id eq currentUser.id, setValue(User::recipeFavorites, currentUser.recipeFavorites))
+            return users.updateOne(
+                User::id eq currentUser.id,
+                setValue(User::recipeFavorites, currentUser.recipeFavorites)
+            )
                 .wasAcknowledged()
         }
         return false
@@ -74,12 +79,15 @@ class AuthenticationDb {
     suspend fun removeRecipeFavorite(currentUser: User, recipeIdToRemove: String): Boolean {
         if (currentUser.recipeFavorites.contains(recipeIdToRemove)) {
             currentUser.recipeFavorites.remove(recipeIdToRemove)
-            return users.updateOne(User::id eq currentUser.id, setValue(User::recipeFavorites, currentUser.recipeFavorites))
+            return users.updateOne(
+                User::id eq currentUser.id,
+                setValue(User::recipeFavorites, currentUser.recipeFavorites)
+            )
                 .wasAcknowledged()
         }
         return false
     }
 
-    fun getUserSubscriptions(userSubscriptions: List<String>): CoroutineFindPublisher<User>  =
+    fun getUserSubscriptions(userSubscriptions: List<String>): CoroutineFindPublisher<User> =
         users.find(Recipe::id.`in`(userSubscriptions))
 }

@@ -49,4 +49,6 @@ class AuthenticationRepositoryImpl(
 
     override suspend fun getUsersSubscriptions(userSubscriptions: List<String>): CoroutineFindPublisher<User> =
         authDb.getUserSubscriptions(userSubscriptions)
+
+    override suspend fun deleteUser(email: String): Boolean = authDb.deleteUser(email)
 }

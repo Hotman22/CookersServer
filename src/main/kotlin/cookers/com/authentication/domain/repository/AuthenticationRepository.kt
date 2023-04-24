@@ -13,6 +13,8 @@ interface AuthenticationRepository {
 
     suspend fun getUser(email: String): User?
 
+    suspend fun deleteUser(email: String): Boolean
+
     suspend fun getUserById(id: String): User?
 
     suspend fun registerRefreshToken(token: Token): Boolean
