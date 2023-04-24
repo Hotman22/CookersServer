@@ -14,7 +14,7 @@ fun Route.deleteUser(
     repository: AuthenticationRepository
 ) {
     route("/authentication/deleteuser") {
-        delete {
+        post {
             val jwtUser = call.authentication.principal as JwtConfig.JwtUser
             if (repository.deleteUser(jwtUser.userMail)) {
                 call.respond(OK, SimpleResponse(true, "Successfully delete account!"))
