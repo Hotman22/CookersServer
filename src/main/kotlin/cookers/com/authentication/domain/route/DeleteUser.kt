@@ -13,15 +13,14 @@ import io.ktor.server.routing.*
 fun Route.deleteUser(
     repository: AuthenticationRepository
 ) {
-    route("/authentication/deleteuser") {
-        post {
+    authenticate {
+        post("/authentication/deleteuser") {
             val jwtUser = call.authentication.principal as JwtConfig.JwtUser
             if (repository.deleteUser(jwtUser.userMail)) {
                 call.respond(OK, SimpleResponse(true, "Successfully delete account!"))
             } else {
                 call.respond(BadRequest, SimpleResponse(false, "An unknown error occured"))
             }
-
         }
     }
 }

@@ -1,5 +1,6 @@
 package cookers.com.recipe.data.data_source
 
+import cookers.com.authentication.domain.model.User
 import cookers.com.recipe.domain.model.Recipe
 import cookers.com.utils.database
 import org.litote.kmongo.*
@@ -30,4 +31,7 @@ class RecipeDb {
 
     suspend fun deleteRecipe(recipeId: String): Boolean =
         recipes.deleteOneById(recipeId).wasAcknowledged()
+
+    suspend fun findRecipesByQuery(query: String, userId: String): List<Recipe> =
+        recipes.find(Recipe::title.regex("^$query", "i"), Recipe::userId ne userId).toList()
 }

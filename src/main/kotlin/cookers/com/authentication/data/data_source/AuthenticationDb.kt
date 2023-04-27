@@ -90,4 +90,7 @@ class AuthenticationDb {
 
     fun getUserSubscriptions(userSubscriptions: List<String>): CoroutineFindPublisher<User> =
         users.find(Recipe::id.`in`(userSubscriptions))
+
+    suspend fun findUsersByQuery(query: String, userId: String): List<User> =
+        users.find(User::userName.regex( "^$query", "i"), User::id ne userId).toList()
 }

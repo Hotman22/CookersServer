@@ -11,6 +11,8 @@ import cookers.com.authentication.domain.route.fetchUserById
 import cookers.com.authentication.domain.util.JwtConfig
 import cookers.com.recipe.di.RecipeRepositoryFactory
 import cookers.com.recipe.domain.route.*
+import cookers.com.search.di.SearchRepositoryFactory
+import cookers.com.search.domain.route.searchResult
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -25,6 +27,7 @@ import io.ktor.server.routing.*
 val jwtConfig = JwtConfig(System.getenv("KTOR_TODOLIST_JWT_SECRET") ?: "default_value")
 val authRepository = AuthenticationRepositoryFactory.make()
 val recipeRepository = RecipeRepositoryFactory.make()
+val searchRepository = SearchRepositoryFactory.make()
 
 fun Application.configureRouting() {
     configureModule()
@@ -77,5 +80,7 @@ private fun Application.configureModule() {
         fetchSubscriptionsRecipes(authRepository, recipeRepository)
         fetchNotSubscriptionsRecipes(authRepository, recipeRepository)
         deleteRecipe(recipeRepository)
+        //search route
+        searchResult(searchRepository)
     }
 }
