@@ -23,15 +23,26 @@ class RecipeDb {
     fun getRecipesFavorite(recipesFavorite: List<String>): CoroutineFindPublisher<Recipe> =
         recipes.find(Recipe::id.`in`(recipesFavorite))
 
-    fun getRecipesFromSubscription(subscriptions: List<String>, recipeFavorites: MutableList<String>): CoroutineFindPublisher<Recipe> =
+    fun getRecipesFromSubscription(
+        subscriptions: List<String>,
+        recipeFavorites: MutableList<String>
+    ): CoroutineFindPublisher<Recipe> =
         recipes.find(and(Recipe::userId.`in`(subscriptions), Recipe::id.nin(recipeFavorites)))
 
-    fun getRecipesNotFromSubscription(userId: String, subscriptions: List<String>, recipeFavorites: MutableList<String>): CoroutineFindPublisher<Recipe> =
+    fun getRecipesNotFromSubscription(
+        userId: String,
+        subscriptions: List<String>,
+        recipeFavorites: MutableList<String>
+    ): CoroutineFindPublisher<Recipe> =
         recipes.find(and(Recipe::userId.nin(subscriptions), Recipe::userId ne userId, Recipe::id.nin(recipeFavorites)))
 
     suspend fun deleteRecipe(recipeId: String): Boolean =
         recipes.deleteOneById(recipeId).wasAcknowledged()
 
-    suspend fun findRecipesByQuery(query: String, userId: String): List<Recipe> =
-        recipes.find(Recipe::title.regex("^$query", "i"), Recipe::userId ne userId).toList()
+    fun findRecipesByQuery(query: String, userId: String): CoroutineFindPublisher<Recipe> =
+        recipes.find(
+            Recipe::title.regex("^$query", "i"),
+            Recipe::userName.regex("^$query", "i"),
+            Recipe::userId ne userId
+        )
 }

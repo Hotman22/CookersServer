@@ -5,14 +5,12 @@ import cookers.com.authentication.domain.route.*
 import cookers.com.authentication.domain.route.favorites.addRecipeFavorite
 import cookers.com.authentication.domain.route.favorites.fetchRecipeFavorite
 import cookers.com.authentication.domain.route.favorites.removeRecipeFavorite
-import cookers.com.authentication.domain.route.fetchAllUsers
-import cookers.com.authentication.domain.route.fetchUser
-import cookers.com.authentication.domain.route.fetchUserById
 import cookers.com.authentication.domain.util.JwtConfig
 import cookers.com.recipe.di.RecipeRepositoryFactory
 import cookers.com.recipe.domain.route.*
 import cookers.com.search.di.SearchRepositoryFactory
-import cookers.com.search.domain.route.searchResult
+import cookers.com.search.domain.route.searchRecipes
+import cookers.com.search.domain.route.searchUsers
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -81,6 +79,7 @@ private fun Application.configureModule() {
         fetchNotSubscriptionsRecipes(authRepository, recipeRepository)
         deleteRecipe(recipeRepository)
         //search route
-        searchResult(searchRepository)
+        searchUsers(searchRepository)
+        searchRecipes(searchRepository)
     }
 }
