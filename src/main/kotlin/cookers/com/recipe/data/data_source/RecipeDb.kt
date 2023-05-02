@@ -41,8 +41,8 @@ class RecipeDb {
 
     fun findRecipesByQuery(query: String, userId: String): CoroutineFindPublisher<Recipe> =
         recipes.find(
-            Recipe::title.regex("^$query", "i"),
-            Recipe::userName.regex("^$query", "i"),
+            or(Recipe::title.regex("^$query", "i"),
+            Recipe::userName.regex("^$query", "i")),
             Recipe::userId ne userId
         )
 }
