@@ -23,7 +23,7 @@ fun Route.fetchRecipeFavorite(
             val size = call.request.queryParameters["size"]?.toInt() ?: 10
             currentUser?.let {
                 val allRecipes = recipeRepository.getRecipesFavorite(currentUser.recipeFavorites)
-                val totalPage = ceil(allRecipes.toList().lastIndex.toDouble() / size.toDouble()).toInt()
+                val totalPage = ceil(allRecipes.toList().size.toDouble() / size.toDouble()).toInt()
                 val recipes = allRecipes.skip(skip = (page - 1) * size).limit(limit = size)
                     .partial(true).toList()
                 call.respond(Recipes(totalPage, recipes))

@@ -21,7 +21,7 @@ fun Route.fetchUserSubscriptions(
             val size = call.request.queryParameters["size"]?.toInt() ?: 10
             currentUser?.let {
                 val allUsers = authRepository.getUsersSubscriptions(currentUser.subscriptions)
-                val totalPage = ceil(allUsers.toList().lastIndex.toDouble() / size.toDouble()).toInt()
+                val totalPage = ceil(allUsers.toList().size.toDouble() / size.toDouble()).toInt()
                 val users = allUsers.skip(skip = (page - 1) * size).limit(limit = size)
                     .partial(true).toList()
                 call.respond(Users(totalPage, users))

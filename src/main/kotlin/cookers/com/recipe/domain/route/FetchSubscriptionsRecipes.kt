@@ -23,7 +23,7 @@ fun Route.fetchSubscriptionsRecipes(
             val size = call.request.queryParameters["size"]?.toInt() ?: 10
             currentUser?.let { user ->
                 val allRecipes = recipeRepository.getRecipesFromSubscription(user.subscriptions, user.recipeFavorites)
-                val totalPage = ceil(allRecipes.toList().lastIndex.toDouble() / size.toDouble()).toInt()
+                val totalPage = ceil(allRecipes.toList().size.toDouble() / size.toDouble()).toInt()
                 val recipes = allRecipes.skip(skip = (page - 1) * size).limit(limit = size)
                     .partial(true).toList()
                 call.respond(Recipes(totalPage, recipes))

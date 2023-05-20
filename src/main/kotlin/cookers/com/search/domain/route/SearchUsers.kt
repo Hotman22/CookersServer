@@ -29,7 +29,7 @@ fun Route.searchUsers(
                 val page = call.request.queryParameters["page"]?.toInt() ?: 1
                 val size = call.request.queryParameters["size"]?.toInt() ?: 10
                 val allUsers = searchRepository.findUsers(query, userJwt.userId)
-                val totalPage = ceil(allUsers.toList().lastIndex.toDouble() / size.toDouble()).toInt()
+                val totalPage = ceil(allUsers.toList().size.toDouble() / size.toDouble()).toInt()
                 val users = allUsers.skip(skip = (page - 1) * size).limit(limit = size)
                     .partial(true).toList()
                 call.respond(Users(totalPage, users))

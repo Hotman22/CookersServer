@@ -18,7 +18,7 @@ fun Route.fetchAllUsers(
             val size = call.request.queryParameters["size"]?.toInt() ?: 10
             val userJwt = call.authentication.principal as JwtConfig.JwtUser
             val allUsers  = repository.getAllUsers(userJwt.userId)
-            val totalPage = ceil(allUsers.toList().lastIndex.toDouble() / size.toDouble()).toInt()
+            val totalPage = ceil(allUsers.toList().size.toDouble() / size.toDouble()).toInt()
             val users = allUsers.skip(skip = (page - 1) * size).limit(limit = size)
                 .partial(true).toList()
             call.respond(Users(totalPage, users))
