@@ -39,7 +39,7 @@ fun Route.createRecipe(
 
             multipartData?.forEachPart { part ->
                 if (part is PartData.FileItem) {
-                    fileName = "${part.originalFileName}${UUID.randomUUID()}"
+                    fileName = "${UUID.randomUUID()}${part.originalFileName?.filterNot { it.isWhitespace() }}"
                     part.save(fileName, "uploads/recipe/")
                 }
             }
